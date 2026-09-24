@@ -1,0 +1,1 @@
+"""Local acceptance pilot assets."""

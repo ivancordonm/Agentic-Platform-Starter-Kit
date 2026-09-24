@@ -1,0 +1,8 @@
+schema_version: 1
+project:
+  name: MCP Pilot
+  description: One-agent acceptance test with a deterministic local MCP fact.
+  limits:
+    max_steps: 2
+    timeout_seconds: 90
+    max_concurrency: 1

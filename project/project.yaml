@@ -1,0 +1,8 @@
+schema_version: 1
+project:
+  name: Generic Demo
+  description: Minimal three-agent workflow for demonstrating the platform.
+  limits:
+    max_steps: 10
+    timeout_seconds: 120
+    max_concurrency: 3

@@ -1,0 +1,10 @@
+schema_version: 1
+tools:
+  pilot_lookup:
+    type: mcp
+    server: pilot
+    allowed_tools: [get_pilot_fact]
+mcp_servers:
+  pilot:
+    url: http://127.0.0.1:8765/mcp
+    timeout_seconds: 15

@@ -1,0 +1,17 @@
+schema_version: 1
+agents:
+  analyzer:
+    description: Summarizes the user's input without adding unsupported facts.
+    model: default
+    prompt: prompts/analyzer.md
+    output_schema: AnalysisResult
+  reviewer:
+    description: Checks the analysis for clarity and unsupported assertions.
+    model: default
+    prompt: prompts/reviewer.md
+    output_schema: ReviewResult
+  finalizer:
+    description: Produces a concise final answer from the analysis and review.
+    model: default
+    prompt: prompts/finalizer.md
+    output_schema: FinalResult

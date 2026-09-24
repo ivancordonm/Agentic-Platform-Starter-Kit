@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentic-platform-starter-kit"
+version = "0.1.0"
+description = "Configuration-first starter kit for graph-based agentic applications"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "httpx>=0.28,<1",
+  "jinja2>=3.1,<4",
+  "langgraph>=0.6,<2",
+  "mcp>=1.19,<3",
+  "openai-agents>=0.2,<1",
+  "pydantic>=2.10,<3",
+  "pyyaml>=6,<7",
+  "python-dotenv>=1,<2",
+  "streamlit>=1.37,<2",
+  "uvicorn[standard]>=0.34,<1",
+  "graphviz>=0.20,<1",
+]
+
+[dependency-groups]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=8,<10",
+  "pytest-asyncio>=0.25,<2",
+  "ruff>=0.11,<1",
+  "types-PyYAML>=6,<7",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+strict = true
+files = ["app", "tests"]

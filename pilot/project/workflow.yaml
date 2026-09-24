@@ -1,0 +1,18 @@
+schema_version: 1
+workflow:
+  name: mcp-pilot
+  type: graph
+  start: probe
+  limits:
+    max_steps: 2
+    timeout_seconds: 90
+    max_concurrency: 1
+  nodes:
+    probe:
+      type: agent
+      agent: probe
+  transitions:
+    - from: probe
+      to: END
+  output:
+    select: results.probe.output
