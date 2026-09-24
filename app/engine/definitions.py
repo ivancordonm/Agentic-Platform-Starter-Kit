@@ -1,7 +1,7 @@
 """Versioned, provider-neutral configuration contracts.
 
-These models intentionally perform structural validation only. Cross-file references,
-graph reachability and runtime support are validated in later phases.
+These models validate local structure. Cross-file references and graph topology
+are validated when the project runtime is built.
 """
 
 from __future__ import annotations
@@ -155,14 +155,8 @@ class ParallelNode(StrictModel):
     max_visits: int = Field(default=1, ge=1, le=100)
 
 
-class ReservedNode(StrictModel):
-    """Documented extension points; compilation will reject them until implemented."""
-
-    type: Literal["router", "human_approval"]
-
-
 type NodeDefinition = Annotated[
-    AgentNode | ParallelNode | ReservedNode, Field(discriminator="type")
+    AgentNode | ParallelNode, Field(discriminator="type")
 ]
 
 

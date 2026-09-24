@@ -1,4 +1,4 @@
-# Phase 5 execution records
+# Execution records
 
 By default, the API keeps the most recent 100 runs in memory, with at most
 5,000 events per run. Restarting the API erases them. Set `RUN_DB_PATH` to use

@@ -1,8 +1,11 @@
-# Phase 6 tool adapters
+# Tool adapters
 
 Tools are declared in `project/tools.yaml` and attached by ID in `agents.yaml`.
 Only tools referenced by an agent are constructed. Validation checks URLs,
 paths, server references and allowlists without opening network connections.
+
+The built-in read-only `filesystem` tool can expose files under `project/knowledge/`
+when explicitly attached to an agent. See its [usage guide](../project/knowledge/README.md).
 
 ```yaml
 schema_version: 1

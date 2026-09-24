@@ -2,13 +2,12 @@
 
 Configuration-first starter kit for graph-based agentic applications.
 
-> **Current status: Phase 7.** Individual agents run with the OpenAI Agents SDK;
+> **Implemented capabilities.** Individual agents run with the OpenAI Agents SDK;
 > sequential, conditional, parallel and bounded-loop workflows run with LangGraph.
-> The Streamlit Developer UI talks only to the API. In-memory traces, atomic
-> project reload and Docker Compose are available.
-> Phase 6 adds allowlisted HTTP tools, MCP Streamable HTTP connections and
-> manager-owned orchestrator workflows.
-> Phase 7 adds opt-in API bearer authentication and durable SQLite run storage.
+> The Streamlit Developer UI talks only to the API. The platform includes run
+> traces, atomic project reload, Docker Compose, allowlisted HTTP and MCP tools,
+> manager-owned orchestrator workflows, opt-in API bearer authentication and
+> optional SQLite run storage.
 
 ## Quick start
 
@@ -212,25 +211,12 @@ demo agent, prompt or schema by name. The intended acceptance test is to replace
 - `app/engine/run_store.py`: bounded in-memory run/event repository.
 - `app/engine/runtime_manager.py`: atomic runtime revision publishing.
 - `project/`: minimal generic Analyzer → Reviewer → Finalizer example.
+- `project/knowledge/`: optional local documents for an explicitly configured
+  read-only filesystem tool; nothing is loaded into agent context automatically.
 - `pilot/`: isolated one-agent project and deterministic local MCP server.
 - `scripts/pilot_check.py`: free MCP preflight and opt-in billable acceptance check.
 - `tests/`: unit and integration tests with no external model calls.
 - `docs/`: architecture, configuration and workflow DSL decisions.
-
-## Roadmap
-
-1. **Phase 1 complete:** loaders, registries, prompts, schemas, individual agent
-   execution, FastAPI, fake tests and an opt-in live smoke script.
-2. **Phase 2 complete:** LangGraph-backed sequential and conditional workflows,
-   workflow API, result selection and topology validation.
-3. **Phase 3 complete:** parallel execution, bounded loops, per-visit history and
-   full graph validation.
-4. **Phase 4 complete:** Streamlit Developer UI, API-backed run debugging and
-   two-service `make dev` startup.
-5. **Phase 5 complete:** execution traces, visualization, reload and Docker.
-6. **Phase 6 complete:** MCP, advanced HTTP tools and orchestrator mode.
-7. **Phase 7 complete (proposed scope):** opt-in API authentication and SQLite
-   trace persistence. This phase had no prior roadmap definition.
 
 The local startup is `uv sync --locked && make dev`. The UI is also
 **local-development only by default**. Traces are bounded and may contain model

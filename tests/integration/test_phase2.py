@@ -122,7 +122,7 @@ def test_ambiguous_transitions_rejected(project_copy: Path) -> None:
         WorkflowExecutor(runtime, AgentExecutor(runtime, FakeRunner()))
 
 
-def test_cycles_rejected_until_phase3(project_copy: Path) -> None:
+def test_cycle_without_path_to_end_is_rejected(project_copy: Path) -> None:
     path = project_copy / "workflow.yaml"
     path.write_text(
         path.read_text().replace(

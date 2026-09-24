@@ -22,7 +22,6 @@ from app.engine.definitions import (
     DirectTransition,
     OrchestratorDefinition,
     ParallelNode,
-    ReservedNode,
     Transition,
     WorkflowDefinition,
 )
@@ -95,8 +94,6 @@ class GraphWorkflowExecutor:
         self._validate_graph()
         graph = StateGraph(WorkflowState)
         for name, node in self.definition.nodes.items():
-            if isinstance(node, ReservedNode):
-                raise ConfigurationError(f"Node {name!r}: type {node.type!r} is not supported")
             graph.add_node(name, self._node(name, node))
         graph.add_edge(START, self.definition.start)
         for transition in self.definition.transitions:
@@ -115,9 +112,6 @@ class GraphWorkflowExecutor:
 
     def _validate_graph(self) -> None:
         nodes = self.definition.nodes
-        for name, node in nodes.items():
-            if isinstance(node, ReservedNode):
-                raise ConfigurationError(f"Node {name!r}: type {node.type!r} is not supported")
         selectors = [self.definition.output.select]
         selectors.extend(
             transition.select for transition in self.definition.transitions
@@ -206,7 +200,7 @@ class GraphWorkflowExecutor:
                 unbounded = []
                 for member in component:
                     member_node = nodes[member]
-                    if not isinstance(member_node, ReservedNode) and member_node.max_visits == 1:
+                    if member_node.max_visits == 1:
                         unbounded.append(member)
                 if unbounded:
                     raise ConfigurationError(

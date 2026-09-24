@@ -7,7 +7,7 @@ from pathlib import Path
 
 from app.engine.agent_registry import AgentRegistry
 from app.engine.config import ProjectConfigs, load_project_configs
-from app.engine.definitions import AgentNode, OrchestratorDefinition, ReservedNode
+from app.engine.definitions import AgentNode, OrchestratorDefinition
 from app.engine.exceptions import ConfigurationError
 from app.engine.model_registry import ModelRegistry
 from app.engine.prompt_loader import PromptLoader
@@ -66,8 +66,6 @@ class ProjectRuntime:
                     )
             return
         for node_name, node in workflow.nodes.items():
-            if isinstance(node, ReservedNode):
-                raise ConfigurationError(f"Node {node_name!r}: type {node.type!r} is not supported")
             referenced = (
                 [node.agent]
                 if isinstance(node, AgentNode)

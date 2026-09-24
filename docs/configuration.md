@@ -12,21 +12,21 @@ The `project/` directory contains five YAML files. Each begins with
 | `workflow.yaml` | `workflow` | Graph nodes, transitions and final output |
 
 IDs begin with a letter and may contain letters, digits, underscores and hyphens.
-Agent prompts use project-relative paths. The runtime loader must additionally
-resolve paths and reject symlink escapes; regex validation alone is not sufficient.
+Agent prompts use project-relative paths. The runtime loader resolves paths and
+rejects symlink escapes; regex validation alone is not sufficient.
 
-Secrets are supplied through environment variables. The future config loader will
-interpolate `${VARIABLE}` only from an explicit allowlist of fields, report missing
-variables, and redact values in diagnostics. Interpolation is **not implemented**
-in Phase 0.
+Secrets are supplied through environment variables. YAML `${VARIABLE}`
+interpolation is not supported. Use environment variables such as
+`OPENAI_API_KEY` and the `auth_env` field of HTTP or MCP tool definitions;
+never put secret values in project files.
 
-`openai` is the intended initial provider. A logical model ID such as `default`
-keeps agents independent of the provider's constructor. Runtime compatibility of
-settings such as `temperature` and `reasoning` must be checked when the adapter is
-implemented.
+`openai` is the supported provider. A logical model ID such as `default` keeps
+agents independent of the provider's constructor. The adapter passes settings
+such as `temperature` and `reasoning` to the SDK; whether a particular model
+accepts them may only be known when a live request is made.
 
 Schemas under `project/schemas/` are trusted Python. YAML refers to a schema by
-class name, not an import path. Phase 1 discovers Pydantic `BaseModel`
+class name, not an import path. The loader discovers Pydantic `BaseModel`
 subclasses, rejects duplicate names and resolves cross-file references.
 
 `make validate` checks references from agents to models, tools, prompts and
@@ -40,6 +40,11 @@ an origin-only HTTPS URL (or loopback HTTP), explicit `allowed_paths` and
 HTTP calls do not follow redirects; query/body size and response size are
 bounded. The tool accepts JSON strings for query and body because the Agents
 SDK requires a closed tool argument schema.
+
+The filesystem tool defaults to `project/knowledge/` unless `root` is set. Files
+there are not automatically placed in an agent's context; declare the tool and
+attach it to an agent to enable on-demand reads. See the
+[knowledge directory guide](../project/knowledge/README.md).
 
 An MCP tool references a named server and must list `allowed_tools` explicitly.
 MCP server URLs follow the same HTTPS/loopback origin rule and can use

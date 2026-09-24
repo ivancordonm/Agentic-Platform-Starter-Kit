@@ -1,4 +1,4 @@
-"""Phase 0 tests: configuration syntax and local structural contracts only."""
+"""Configuration syntax and local structural contract tests."""
 
 from pathlib import Path
 
@@ -92,6 +92,14 @@ def test_parallel_node_contract() -> None:
     parsed = WorkflowConfig.model_validate(data)
     assert isinstance(parsed.workflow, WorkflowDefinition)
     assert parsed.workflow.nodes["review"].type == "parallel"
+
+
+@pytest.mark.parametrize("node_type", ["router", "human_approval"])
+def test_unimplemented_node_types_are_rejected(node_type: str) -> None:
+    data = yaml.safe_load((PROJECT_DIR / "workflow.yaml").read_text(encoding="utf-8"))
+    data["workflow"]["nodes"]["review"] = {"type": node_type}
+    with pytest.raises(ValidationError, match="union_tag_invalid"):
+        WorkflowConfig.model_validate(data)
 
 
 def test_tool_root_cannot_escape_project() -> None:

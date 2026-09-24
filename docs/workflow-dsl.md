@@ -1,9 +1,9 @@
 # Workflow DSL, schema version 1
 
-The current demo illustrates the graph syntax. Phase 3 compiles agent and parallel
-nodes, conditional transitions and bounded loops with LangGraph.
+The current demo illustrates the graph syntax. Graph workflows support agent and
+parallel nodes, conditional transitions and bounded loops with LangGraph.
 
-Phase 6 also supports a separate manager-owned orchestrator workflow:
+The separate manager-owned orchestrator workflow is also supported:
 
 ```yaml
 workflow:
@@ -29,11 +29,12 @@ deterministic choice when routing and per-node state must be explicit.
   `max_concurrency` limits simultaneous branch calls. `fail_fast` cancels unfinished
   siblings on the first failure; `collect_errors` returns partial outputs and
   per-branch errors.
-- `router`, `human_approval`: reserved syntax, not executable in V1.
+Other node types, including `router` and `human_approval`, are not supported and
+are rejected during configuration validation.
 
 `start` and `END` are graph markers, not user-defined node types. A loop is an
 edge back to an earlier node, controlled by `max_visits` and workflow `max_steps`.
-There is no separate `loop` node in V1.
+There is no separate `loop` node.
 
 ## Transitions
 
