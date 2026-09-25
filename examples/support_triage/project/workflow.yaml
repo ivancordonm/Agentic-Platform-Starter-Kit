@@ -1,0 +1,42 @@
+schema_version: 1
+workflow:
+  name: support-triage
+  type: graph
+  start: classify
+  limits:
+    max_steps: 5
+    timeout_seconds: 180
+    max_concurrency: 1
+  nodes:
+    classify:
+      type: agent
+      agent: classifier
+    lookup:
+      type: agent
+      agent: knowledge_lookup
+    escalate:
+      type: agent
+      agent: escalation
+    compose:
+      type: agent
+      agent: composer
+    review:
+      type: agent
+      agent: reviewer
+  transitions:
+    - from: classify
+      select: results.classify.output.route
+      cases:
+        escalate: escalate
+        knowledge: lookup
+      default: fail
+    - from: lookup
+      to: compose
+    - from: escalate
+      to: review
+    - from: compose
+      to: review
+    - from: review
+      to: END
+  output:
+    select: results.review.output

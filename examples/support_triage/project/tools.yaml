@@ -1,0 +1,10 @@
+schema_version: 1
+tools:
+  support_kb:
+    type: mcp
+    server: local_kb
+    allowed_tools: [search_support_articles]
+mcp_servers:
+  local_kb:
+    url: http://127.0.0.1:8766/mcp
+    timeout_seconds: 15

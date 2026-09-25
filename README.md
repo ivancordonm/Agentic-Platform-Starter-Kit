@@ -214,6 +214,9 @@ demo agent, prompt or schema by name. The intended acceptance test is to replace
 - `project/knowledge/`: optional local documents for an explicitly configured
   read-only filesystem tool; nothing is loaded into agent context automatically.
 - `pilot/`: isolated one-agent project and deterministic local MCP server.
+- `examples/support_triage/`: isolated, fictional support-ticket workflow with
+  conditional routing, a local read-only knowledge base, and a step-by-step
+  [Spanish guide](examples/support_triage/README.md) for adapting the kit.
 - `scripts/pilot_check.py`: free MCP preflight and opt-in billable acceptance check.
 - `tests/`: unit and integration tests with no external model calls.
 - `docs/`: architecture, configuration and workflow DSL decisions.

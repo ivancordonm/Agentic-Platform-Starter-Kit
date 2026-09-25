@@ -1,0 +1,29 @@
+schema_version: 1
+agents:
+  classifier:
+    description: Classifies the ticket and identifies incidents needing human escalation.
+    model: default
+    prompt: prompts/classifier.md
+    output_schema: TicketClassification
+  knowledge_lookup:
+    description: Searches the local support knowledge base without inventing articles.
+    model: default
+    prompt: prompts/knowledge_lookup.md
+    tools: [support_kb]
+    output_schema: KnowledgeResult
+    max_turns: 5
+  escalation:
+    description: Prepares a safe escalation note for a potentially critical incident.
+    model: default
+    prompt: prompts/escalation.md
+    output_schema: ResponseDraft
+  composer:
+    description: Drafts a customer response grounded in retrieved knowledge.
+    model: default
+    prompt: prompts/composer.md
+    output_schema: ResponseDraft
+  reviewer:
+    description: Checks grounding and returns the final customer response.
+    model: default
+    prompt: prompts/reviewer.md
+    output_schema: SupportResponse

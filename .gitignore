@@ -10,3 +10,4 @@ htmlcov/
 dist/
 .DS_Store
 .pilot-runs.sqlite3*
+.support-runs.sqlite3*
